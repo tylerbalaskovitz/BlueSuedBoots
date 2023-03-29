@@ -4,10 +4,14 @@ import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
+import com.tbonegames.inputs.KeyboardInputs;
+
 public class GamePanel extends JPanel{
 
 	//the panel is the picture
 	public GamePanel() {
+			
+		addKeyListener(new KeyboardInputs());
 		
 	}
 	
