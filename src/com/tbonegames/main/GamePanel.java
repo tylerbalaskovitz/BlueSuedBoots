@@ -1,6 +1,7 @@
 package com.tbonegames.main;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.Random;
 
@@ -15,19 +16,25 @@ public class GamePanel extends JPanel{
 	private float xDelta = 100, yDelta = 100;
 	private float xDir = .001f, yDir = .001f;
 	private Color color;
-	private int frames = 0;
-	private long lastCheck = 0;
 	private Random random;
 	
 	//the panel is the picture
 	public GamePanel() {
 		random = new Random();
 		mouseInputs = new MouseInputs(this);
-		
+		setPanelSize();
 		addKeyListener(new KeyboardInputs(this));
 		addMouseListener(mouseInputs);
 		addMouseMotionListener(mouseInputs);
 	}
+	
+	public void setPanelSize() {
+		Dimension size = new Dimension(1280, 720);
+		setMinimumSize(size);
+		setPreferredSize(size);
+		setMaximumSize(size);
+	}
+	
 	
 	public void changeXDelta(int value) {
 		this.xDelta += value;
