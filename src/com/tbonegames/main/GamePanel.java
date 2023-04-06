@@ -17,7 +17,7 @@ public class GamePanel extends JPanel{
 	private MouseInputs mouseInputs;
 	private float xDelta = 100, yDelta = 100;
 	private BufferedImage img;
-	private BufferedImage[] idleAnimation;
+	private BufferedImage[][] animations;
 	private int animationTick, animationIndex, animationSpeed = 10;
 	
 	//the panel is the picture
@@ -34,10 +34,11 @@ public class GamePanel extends JPanel{
 	}
 	
 	public void loadAnimations() {
-		idleAnimation = new BufferedImage[5];
+		animations = new BufferedImage[9][6];
 		
-		for (int i = 0; i < idleAnimation.length; i++) {
-			idleAnimation[i] = img.getSubimage(i*64, 0, 64, 40);
+		for (int j = 0; j < animations.length; j++)
+		for (int i = 0; i < animations[j].length; i++) {
+			animations[j][i] = img.getSubimage(i*64, j*40, 64, 40);
 		}
 	}
 	
@@ -85,7 +86,7 @@ public class GamePanel extends JPanel{
 		if (animationTick >= animationSpeed) {
 			animationTick = 0;
 			animationIndex++;
-			if (animationIndex > idleAnimation.length-1) {
+			if (animationIndex > animations.length-1) {
 				animationIndex = 0;
 			}
 		}
@@ -101,7 +102,7 @@ public class GamePanel extends JPanel{
 		//with buffered images you can draw a section of the image, ie tiles for the game to work.
 		//also the method with its parameters filled out can also be used to pass an image
 		//128 is the width and the heeight is 80
-		g.drawImage(idleAnimation[animationIndex], (int)xDelta, (int)yDelta, 128, 80, null);
+		g.drawImage(animations[7][1], (int)xDelta, (int)yDelta, 128, 80, null);
 	}
 	
 	
