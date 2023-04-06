@@ -12,6 +12,9 @@ import javax.swing.JPanel;
 import com.tbonegames.inputs.KeyboardInputs;
 import com.tbonegames.inputs.MouseInputs;
 
+//static import to get the idle value
+import static utils.Constants.PlayerConstants.*;
+
 public class GamePanel extends JPanel{
 
 	private MouseInputs mouseInputs;
@@ -19,6 +22,7 @@ public class GamePanel extends JPanel{
 	private BufferedImage img;
 	private BufferedImage[][] animations;
 	private int animationTick, animationIndex, animationSpeed = 10;
+	private int playerAction = IDLE;
 	
 	//the panel is the picture
 	public GamePanel() {
@@ -86,7 +90,7 @@ public class GamePanel extends JPanel{
 		if (animationTick >= animationSpeed) {
 			animationTick = 0;
 			animationIndex++;
-			if (animationIndex > animations.length-1) {
+			if (animationIndex >= 6) {
 				animationIndex = 0;
 			}
 		}
@@ -102,7 +106,7 @@ public class GamePanel extends JPanel{
 		//with buffered images you can draw a section of the image, ie tiles for the game to work.
 		//also the method with its parameters filled out can also be used to pass an image
 		//128 is the width and the heeight is 80
-		g.drawImage(animations[7][1], (int)xDelta, (int)yDelta, 128, 80, null);
+		g.drawImage(animations[1][animationIndex], (int)xDelta, (int)yDelta, 128, 80, null);
 	}
 	
 	
