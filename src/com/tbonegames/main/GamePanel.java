@@ -18,6 +18,7 @@ public class GamePanel extends JPanel{
 	private float xDelta = 100, yDelta = 100;
 	private BufferedImage img;
 	private BufferedImage[] idleAnimation;
+	private int animationTick, animationIndex, animationSpeed = 10;
 	
 	//the panel is the picture
 	public GamePanel() {
@@ -79,15 +80,28 @@ public class GamePanel extends JPanel{
 		this.yDelta = y;
 	}
 	
+	private void updateAnimationTick() {
+		animationTick++;
+		if (animationTick >= animationSpeed) {
+			animationTick = 0;
+			animationIndex++;
+			if (animationIndex > idleAnimation.length-1) {
+				animationIndex = 0;
+			}
+		}
+	}
+	
 	//This gets called whenever we press the play button.
 	//Graphics allows us to draw
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
+		updateAnimationTick();
+		
 		//with buffered images you can draw a section of the image, ie tiles for the game to work.
 		//also the method with its parameters filled out can also be used to pass an image
 		//128 is the width and the heeight is 80
-		g.drawImage(idleAnimation[3], (int)xDelta, (int)yDelta, 128, 80, null);
+		g.drawImage(idleAnimation[animationIndex], (int)xDelta, (int)yDelta, 128, 80, null);
 	}
 	
 	
