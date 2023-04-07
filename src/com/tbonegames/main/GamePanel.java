@@ -14,6 +14,7 @@ import com.tbonegames.inputs.MouseInputs;
 
 //static import to get the idle value
 import static utils.Constants.PlayerConstants.*;
+import static utils.Constants.Directions.*;
 
 public class GamePanel extends JPanel{
 
@@ -23,6 +24,8 @@ public class GamePanel extends JPanel{
 	private BufferedImage[][] animations;
 	private int animationTick, animationIndex, animationSpeed = 10;
 	private int playerAction = IDLE;
+	private int playerDir = -1;
+	private boolean moving = false;
 	
 	//the panel is the picture
 	public GamePanel() {
@@ -76,13 +79,14 @@ public class GamePanel extends JPanel{
 		
 	}
 	
-	public void changeYDelta(int value) {
-		this.yDelta += value;
+	
+	public void setDirection(int direction) {
+		this.playerDir = direction;
+		moving = true;
 	}
 	
-	public void setRectPos(int x, int y) {
-		this.xDelta = x;
-		this.yDelta = y;
+	public void setMoving(boolean moving) {
+		this.moving = moving;
 	}
 	
 	private void updateAnimationTick() {
@@ -90,8 +94,36 @@ public class GamePanel extends JPanel{
 		if (animationTick >= animationSpeed) {
 			animationTick = 0;
 			animationIndex++;
-			if (animationIndex >= 6) {
+			if (animationIndex >= getSpriteAmount(playerAction)) {
 				animationIndex = 0;
+			}
+		}
+	}
+	
+	private void setAnimation() {
+		if (moving) {
+			playerAction = RUNNING;
+		} else {
+			playerAction = IDLE;
+		}
+	}
+	
+	private void updatePos() {
+		if (moving) {
+			switch(playerDir) {
+			case LEFT:
+				xDelta -= 5;
+				break;
+			case UP:
+				yDelta -= 5;
+				break;
+			case RIGHT:
+				xDelta += 5;
+				break;
+			case DOWN:
+				yDelta += 5;
+				break;
+			
 			}
 		}
 	}
@@ -103,10 +135,13 @@ public class GamePanel extends JPanel{
 		
 		updateAnimationTick();
 		
+		setAnimation();
+		updatePos();
+		
 		//with buffered images you can draw a section of the image, ie tiles for the game to work.
 		//also the method with its parameters filled out can also be used to pass an image
 		//128 is the width and the heeight is 80
-		g.drawImage(animations[1][animationIndex], (int)xDelta, (int)yDelta, 128, 80, null);
+		g.drawImage(animations[playerAction][animationIndex], (int)xDelta, (int)yDelta, 256, 160, null);
 	}
 	
 	
