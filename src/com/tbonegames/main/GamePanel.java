@@ -128,15 +128,18 @@ public class GamePanel extends JPanel{
 		}
 	}
 	
+	public void updateGame() {
+		updateAnimationTick();
+		setAnimation();
+		updatePos();
+	}
+	
 	//This gets called whenever we press the play button.
 	//Graphics allows us to draw
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
-		updateAnimationTick();
-		
-		setAnimation();
-		updatePos();
+
 		
 		//with buffered images you can draw a section of the image, ie tiles for the game to work.
 		//also the method with its parameters filled out can also be used to pass an image

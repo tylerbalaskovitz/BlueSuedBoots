@@ -21,16 +21,17 @@ public class Game implements Runnable{
 		gameThread = new Thread(this);
 		gameThread.start();
 	}
+	
+	public void update() {
+		gamePanel.updateGame();
+	}
 
 	@Override
 	public void run() {
 
 		double timePerFrame = 1000000000.0/FPS_SET;
-		
 		//time of the frequency
 		double timePerUpdate = 1000000000.0/UPS_SET;
-		long lastFrame = System.nanoTime();
-		long now = System.nanoTime();
 		
 		long previousTime = System.nanoTime();
 		
@@ -39,9 +40,9 @@ public class Game implements Runnable{
 		long lastCheck = System.currentTimeMillis();
 		
 		double deltaU = 0;
+		double deltaF = 0;
 		while(true) {
 
-			now = System.nanoTime();
 			
 			//currently this game loop slowly loses time over a longer period of time due to the fact that 
 			//now - lastFrame can exceed the timePerFrame double, and creating code inefficies that need to be
@@ -49,27 +50,34 @@ public class Game implements Runnable{
 			long currentTime = System.nanoTime();
 			
 			deltaU += (currentTime - previousTime) / timePerUpdate;
+			deltaF += (currentTime - previousTime) / timePerFrame;
+			previousTime = currentTime;
 			
 			//this allows the variable to be held and controlled so there isn't any data loss, and allows the next update
 			// to come sooner creating an offset in the update loop regarding deltaU.
 			if (deltaU >= 1) {
-				//update();
+				update();
 				updates++;
-					deltaU--;
+				deltaU--;
 			}
 			
-		if(now - lastFrame >= timePerFrame) {
+			if (deltaF >= 1) {
+				gamePanel.repaint();
+				deltaF--;
+				frames++;
+			}
 			
-			gamePanel.repaint();
-			lastFrame = now;
-			frames++;
-			
-		}
+//		if(now - lastFrame >= timePerFrame) {
+//			gamePanel.repaint();
+//			lastFrame = now;
+//			frames++;
+//		}
 		
 		if(System.currentTimeMillis() - lastCheck>= 1000) {
 			lastCheck = System.currentTimeMillis();
-			System.out.println("FPS: " + frames);
+			System.out.println("FPS: " + frames + "UPS Updates: " + updates);
 			frames = 0;
+			updates = 0;
 		}
 			
 		}
