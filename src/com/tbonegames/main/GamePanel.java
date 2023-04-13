@@ -2,11 +2,7 @@ package com.tbonegames.main;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
 
-import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import com.tbonegames.inputs.KeyboardInputs;
