@@ -158,6 +158,16 @@ public class Player extends Entity{
 	public void setDown(boolean down) {
 		this.down = down;
 	}
+
+
+
+	public void resetDirBooleans() {
+		left = false;
+		right = false;
+		up = false;
+		down = false;
+		
+	}
 	
 	
 }
