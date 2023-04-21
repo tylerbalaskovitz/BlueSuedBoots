@@ -2,6 +2,7 @@ package entities;
 
 import static utils.Constants.PlayerConstants.IDLE;
 import static utils.Constants.PlayerConstants.RUNNING;
+import static utils.Constants.PlayerConstants.ATTACK_1;
 import static utils.Constants.PlayerConstants.getSpriteAmount;
 
 import java.awt.Graphics;
@@ -16,7 +17,7 @@ public class Player extends Entity{
 	private BufferedImage[][] animations;
 	private int animationTick, animationIndex, animationSpeed = 10;
 	private int playerAction = IDLE;
-	private boolean moving = false;
+	private boolean moving = false, attacking = false;
 	private boolean left, up, right, down;
 	private float playerSpeed = 2.0f;
 	
@@ -53,18 +54,34 @@ public class Player extends Entity{
 			animationIndex++;
 			if (animationIndex >= getSpriteAmount(playerAction)) {
 				animationIndex = 0;
+				attacking = false;
 			}
 		}
 	}
 	
 	private void setAnimation() {
+		int startAnimation = playerAction;
+		
 		if (moving) {
 			playerAction = RUNNING;
 		} else {
 			playerAction = IDLE;
 		}
+		if (attacking) {
+			playerAction = ATTACK_1;
+		}
+		if (startAnimation != playerAction) {
+			resetAnimationTick();
+		}
 	}
 	
+	private void resetAnimationTick() {
+		animationTick = 0;
+		animationIndex = 0;
+	}
+
+
+
 	private void updatePos() {
 		moving = false;
 		
@@ -167,6 +184,10 @@ public class Player extends Entity{
 		up = false;
 		down = false;
 		
+	}
+	
+	public void setAttacking(boolean attacking) {
+		this.attacking = attacking;
 	}
 	
 	
