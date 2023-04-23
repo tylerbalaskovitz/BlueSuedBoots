@@ -1,5 +1,9 @@
 package com.tbonegames.main;
 
+//static imports have to include the entire package name, the name of the class, and the members or the * to import
+//everything.
+import static com.tbonegames.main.Game.*;
+
 import java.awt.Dimension;
 import java.awt.Graphics;
 
@@ -27,10 +31,11 @@ public class GamePanel extends JPanel{
 	
 	
 	public void setPanelSize() {
-		Dimension size = new Dimension(1280, 720);
+		Dimension size = new Dimension(GAME_WIDTH, GAME_HEIGHT);
 		setMinimumSize(size);
 		setPreferredSize(size);
 		setMaximumSize(size);
+		System.out.println("SIZE: "+ GAME_WIDTH + ":" + GAME_HEIGHT);
 	}
 	
 	public void updateGame() {
