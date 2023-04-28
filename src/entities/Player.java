@@ -25,8 +25,8 @@ public class Player extends Entity{
 	private boolean left, up, right, down;
 	private float playerSpeed = 2.0f;
 	
-	public Player(float x, float y) {
-		super(x, y);
+	public Player(float x, float y, int width, int height) {
+		super(x, y, width, height);
 		loadAnimations();
 		
 	}
@@ -35,6 +35,7 @@ public class Player extends Entity{
 	
 	public void update() {
 		updatePos();
+		updateHitBox();
 		updateAnimationTick();
 		setAnimation();
 		
@@ -46,7 +47,7 @@ public class Player extends Entity{
 		//also the method with its parameters filled out can also be used to pass an image
 		//128 is the width and the heeight is 80
 		g.drawImage(animations[playerAction][animationIndex], (int)x, (int)y, (int)(Game.TILES_SIZE*1.5), Game.TILES_SIZE, null);
-
+		drawHitBox(g);
 	}
 	
 	
