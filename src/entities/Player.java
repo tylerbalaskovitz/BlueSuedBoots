@@ -24,6 +24,7 @@ public class Player extends Entity{
 	private boolean moving = false, attacking = false;
 	private boolean left, up, right, down;
 	private float playerSpeed = 2.0f;
+	private int[][] levelData;
 	
 	public Player(float x, float y, int width, int height) {
 		super(x, y, width, height);
@@ -118,6 +119,11 @@ public class Player extends Entity{
 				animations[j][i] = img.getSubimage(i*64, j*40, 64, 40);
 			}
 	}
+	
+	public void loadLevelData(int[][] levelData) {
+		this.levelData = levelData;
+	}
+	
 
 
 
