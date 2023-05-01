@@ -1,5 +1,6 @@
 package entities;
 
+import static utils.HelpMethods.canMoveHere;
 import static utils.Constants.PlayerConstants.IDLE;
 import static utils.Constants.PlayerConstants.RUNNING;
 import static utils.Constants.PlayerConstants.ATTACK_1;
@@ -90,20 +91,27 @@ public class Player extends Entity{
 
 	private void updatePos() {
 		moving = false;
+		if (!left && !right && !up && !down) {
+			return; //ends the method earlier.
+		}
+		
+		float xSpeed = 0, ySpeed = 0; //temporary storage of the spped.
 		
 		if (left && !right) {
-			x-=playerSpeed;
-			moving = true;
+			xSpeed = -playerSpeed;
 		} else if(right && !left){
-			x += playerSpeed;
-			moving = true;
+			xSpeed = playerSpeed;
 		}
 		
 		if (up && !down) {
-			y -= playerSpeed;
-			moving = true;
+			ySpeed = -playerSpeed;
 		} else if (down && !up) {
-			y += playerSpeed;
+			ySpeed = playerSpeed;
+		}
+		
+		if (canMoveHere(x+xSpeed, y+ySpeed, width, height, levelData)) {
+			this.x += xSpeed;
+			this.y += ySpeed;
 			moving = true;
 		}
 		
