@@ -26,10 +26,13 @@ public class Player extends Entity{
 	private boolean left, up, right, down;
 	private float playerSpeed = 2.0f;
 	private int[][] levelData;
+	private float xDrawOffset = 21 * Game.SCALE;
+	private float yDrawOffset = 4 * Game.SCALE;
 	
 	public Player(float x, float y, int width, int height) {
 		super(x, y, width, height);
 		loadAnimations();
+		initHitBox(x, y, 20 * Game.SCALE, 28*Game.SCALE);
 		
 	}
 	
@@ -37,7 +40,6 @@ public class Player extends Entity{
 	
 	public void update() {
 		updatePos();
-		updateHitBox();
 		updateAnimationTick();
 		setAnimation();
 		
@@ -48,7 +50,7 @@ public class Player extends Entity{
 		//with buffered images you can draw a section of the image, ie tiles for the game to work.
 		//also the method with its parameters filled out can also be used to pass an image
 		//128 is the width and the heeight is 80
-		g.drawImage(animations[playerAction][animationIndex], (int)x, (int)y, (int)(Game.TILES_SIZE*1.5), Game.TILES_SIZE, null);
+		g.drawImage(animations[playerAction][animationIndex], (int)(hitBox.x - xDrawOffset), (int)(hitBox.y - yDrawOffset), width, height, null);
 		drawHitBox(g);
 	}
 	
@@ -109,9 +111,15 @@ public class Player extends Entity{
 			ySpeed = playerSpeed;
 		}
 		
-		if (canMoveHere(x+xSpeed, y+ySpeed, width, height, levelData)) {
-			this.x += xSpeed;
-			this.y += ySpeed;
+//		if (canMoveHere(x+xSpeed, y+ySpeed, width, height, levelData)) {
+//			this.x += xSpeed;
+//			this.y += ySpeed;
+//			moving = true;
+//		}
+		
+		if (canMoveHere(hitBox.x+xSpeed, hitBox.y+ySpeed, hitBox.width, hitBox.height, levelData)) {
+			hitBox.x += xSpeed;
+			hitBox.y += ySpeed;
 			moving = true;
 		}
 		

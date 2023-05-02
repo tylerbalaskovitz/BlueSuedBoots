@@ -5,7 +5,7 @@ import com.tbonegames.main.Game;
 //static methods to take in data and return values
 public class HelpMethods {
 	
-	public static boolean canMoveHere(float x, float y, int width, int height, int [][] levelData) {
+	public static boolean canMoveHere(float x, float y, float width, float height, int [][] levelData) {
 		
 		if (!isSolid(x, y, levelData)) {
 			if (!isSolid(x + width, y + height, levelData)) {
