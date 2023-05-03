@@ -1,6 +1,6 @@
 package entities;
 
-import static utils.HelpMethods.canMoveHere;
+import static utils.HelpMethods.*;
 import static utils.Constants.PlayerConstants.IDLE;
 import static utils.Constants.PlayerConstants.RUNNING;
 import static utils.Constants.PlayerConstants.ATTACK_1;
@@ -23,11 +23,18 @@ public class Player extends Entity{
 	private int animationTick, animationIndex, animationSpeed = 10;
 	private int playerAction = IDLE;
 	private boolean moving = false, attacking = false;
-	private boolean left, up, right, down;
+	private boolean left, up, right, down, jump;
 	private float playerSpeed = 2.0f;
 	private int[][] levelData;
 	private float xDrawOffset = 21 * Game.SCALE;
 	private float yDrawOffset = 4 * Game.SCALE;
+	
+	//jumping and gravity.
+	private float airSpeed = 0f;
+	private float gravity = .04f * Game.SCALE;
+	private float jumpSpeed = -2.25f * Game.SCALE;
+	private float fallSpeecAfterCollision = 0.5f * Game.SCALE;
+	private boolean inAir = false;
 	
 	public Player(float x, float y, int width, int height) {
 		super(x, y, width, height);
@@ -93,39 +100,47 @@ public class Player extends Entity{
 
 	private void updatePos() {
 		moving = false;
-		if (!left && !right && !up && !down) {
+		if (!left && !right && !inAir) {
 			return; //ends the method earlier.
 		}
 		
-		float xSpeed = 0, ySpeed = 0; //temporary storage of the spped.
+		float xSpeed = 0; //temporary storage of the spped.
 		
-		if (left && !right) {
-			xSpeed = -playerSpeed;
-		} else if(right && !left){
-			xSpeed = playerSpeed;
+		if (left) {
+			xSpeed -= playerSpeed;
+		}
+		if(right){
+			xSpeed += playerSpeed;
 		}
 		
-		if (up && !down) {
-			ySpeed = -playerSpeed;
-		} else if (down && !up) {
-			ySpeed = playerSpeed;
+		if(inAir) {
+			
+		} else {
+			updateXPos(xSpeed);
 		}
 		
-//		if (canMoveHere(x+xSpeed, y+ySpeed, width, height, levelData)) {
-//			this.x += xSpeed;
-//			this.y += ySpeed;
+		
+		
+//		if (canMoveHere(hitBox.x+xSpeed, hitBox.y+ySpeed, hitBox.width, hitBox.height, levelData)) {
+//			hitBox.x += xSpeed;
+//			hitBox.y += ySpeed;
 //			moving = true;
 //		}
-		
-		if (canMoveHere(hitBox.x+xSpeed, hitBox.y+ySpeed, hitBox.width, hitBox.height, levelData)) {
-			hitBox.x += xSpeed;
-			hitBox.y += ySpeed;
-			moving = true;
-		}
 		
 	
 	}
 	
+	private void updateXPos(float xSpeed) {
+		if (canMoveHere(hitBox.x+xSpeed, hitBox.y, hitBox.width, hitBox.height, levelData)) {
+			hitBox.x += xSpeed;
+		} else {
+			hitBox.x = getEntityXPosNextToWall(hitBox, xSpeed);
+		}
+		
+	}
+
+
+
 	public void loadAnimations() {
 			BufferedImage img = LoadSave.getSpriteAtlas(LoadSave.PLAYER_ATLAS);
 			

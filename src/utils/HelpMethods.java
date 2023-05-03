@@ -1,5 +1,7 @@
 package utils;
 
+import java.awt.geom.Rectangle2D;
+
 import com.tbonegames.main.Game;
 
 //static methods to take in data and return values
@@ -37,6 +39,21 @@ public class HelpMethods {
 			return true;
 		} else {
 			return false;
+		}
+		
+	}
+	
+	public static float getEntityXPosNextToWall(Rectangle2D.Float hitbox, float xSpeed) {
+		int currentTile = (int)(hitbox.x/ Game.TILES_SIZE);
+		
+		if (xSpeed > 0) {
+			//right
+			int tileXPos = currentTile * Game.TILES_SIZE;
+			int xOffset = (int)(Game.TILES_SIZE - hitbox.width);
+			return tileXPos + xOffset -1;
+		} else {
+			//left
+			return currentTile * Game.TILES_SIZE;
 		}
 		
 	}
