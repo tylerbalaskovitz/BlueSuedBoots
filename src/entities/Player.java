@@ -33,7 +33,7 @@ public class Player extends Entity{
 	private float airSpeed = 0f;
 	private float gravity = .04f * Game.SCALE;
 	private float jumpSpeed = -2.25f * Game.SCALE;
-	private float fallSpeecAfterCollision = 0.5f * Game.SCALE;
+	private float fallSpeedAfterCollision = 0.5f * Game.SCALE;
 	private boolean inAir = false;
 	
 	public Player(float x, float y, int width, int height) {
@@ -100,6 +100,9 @@ public class Player extends Entity{
 
 	private void updatePos() {
 		moving = false;
+		if(jump) {
+			jump();
+		}
 		if (!left && !right && !inAir) {
 			return; //ends the method earlier.
 		}
@@ -114,22 +117,49 @@ public class Player extends Entity{
 		}
 		
 		if(inAir) {
+			//first to check up and down points and then left to right
+			if(canMoveHere(hitBox.x, hitBox.y + airSpeed, hitBox.width, hitBox.height, levelData)) {
+				hitBox.y += airSpeed;
+				airSpeed += gravity;
+				updateXPos(xSpeed);
+			} else {
+				hitBox.y = getEntityYPosUnderRoofOrAboveFloor(hitBox, airSpeed);
+				if (airSpeed > 0) {
+					resetInAir();
+				} else {
+					airSpeed = fallSpeedAfterCollision;
+				}
+				updateXPos(xSpeed);
+			}
 			
 		} else {
 			updateXPos(xSpeed);
 		}
 		
-		
-		
-//		if (canMoveHere(hitBox.x+xSpeed, hitBox.y+ySpeed, hitBox.width, hitBox.height, levelData)) {
-//			hitBox.x += xSpeed;
-//			hitBox.y += ySpeed;
-//			moving = true;
-//		}
-		
+		moving = true;
 	
 	}
 	
+	private void jump() {
+		if (inAir) {
+			return;
+		} else {
+			inAir = true;
+			airSpeed = jumpSpeed;
+		}
+		
+	}
+
+
+
+	private void resetInAir() {
+		inAir = false;
+		airSpeed = 0;
+		
+	}
+
+
+
 	private void updateXPos(float xSpeed) {
 		if (canMoveHere(hitBox.x+xSpeed, hitBox.y, hitBox.width, hitBox.height, levelData)) {
 			hitBox.x += xSpeed;
