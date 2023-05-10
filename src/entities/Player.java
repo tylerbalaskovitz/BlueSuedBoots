@@ -116,6 +116,12 @@ public class Player extends Entity{
 			xSpeed += playerSpeed;
 		}
 		
+		if(!inAir) {
+			if (!isEntityOnFLoor(hitBox, levelData)) {
+				inAir = true;
+			}
+		}
+		
 		if(inAir) {
 			//first to check up and down points and then left to right
 			if(canMoveHere(hitBox.x, hitBox.y + airSpeed, hitBox.width, hitBox.height, levelData)) {
@@ -246,6 +252,10 @@ public class Player extends Entity{
 	
 	public void setAttacking(boolean attacking) {
 		this.attacking = attacking;
+	}
+	
+	public void setJump(boolean jump) {
+		this.jump = jump;
 	}
 	
 	

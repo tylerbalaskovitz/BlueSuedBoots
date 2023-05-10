@@ -71,5 +71,15 @@ public class HelpMethods {
 			return currentTile * Game.TILES_SIZE;
 		}
 	}
+	
+	public static boolean isEntityOnFLoor(Rectangle2D.Float hitbox, int[][] levelData) {
+		//check the pixel below bottom left, and bottom right
+		if(!isSolid(hitbox.x, hitbox.y +hitbox.height+1, levelData)) {
+			if(!isSolid(hitbox.x + hitbox.width, hitbox.y +hitbox.height+1, levelData)) {
+				return false;
+			}
+		}
+		return true;
+	}
 
 }
