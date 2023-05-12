@@ -1,17 +1,11 @@
 package entities;
 
 import static utils.HelpMethods.*;
-import static utils.Constants.PlayerConstants.IDLE;
-import static utils.Constants.PlayerConstants.RUNNING;
-import static utils.Constants.PlayerConstants.ATTACK_1;
+import static utils.Constants.PlayerConstants.*;
 import static utils.Constants.PlayerConstants.getSpriteAmount;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
-
-import javax.imageio.ImageIO;
 
 import com.tbonegames.main.Game;
 
@@ -39,7 +33,7 @@ public class Player extends Entity{
 	public Player(float x, float y, int width, int height) {
 		super(x, y, width, height);
 		loadAnimations();
-		initHitBox(x, y, 20 * Game.SCALE, 28*Game.SCALE);
+		initHitBox(x, y, 20 * Game.SCALE, 27*Game.SCALE);
 		
 	}
 	
@@ -83,6 +77,15 @@ public class Player extends Entity{
 		} else {
 			playerAction = IDLE;
 		}
+		
+		if (inAir) {
+			if(airSpeed < 0) {
+				playerAction = JUMP;
+			} else {
+				playerAction = FALLING;
+			}
+		}
+		
 		if (attacking) {
 			playerAction = ATTACK_1;
 		}
@@ -117,7 +120,7 @@ public class Player extends Entity{
 		}
 		
 		if(!inAir) {
-			if (!isEntityOnFLoor(hitBox, levelData)) {
+			if (!isEntityOnFloor(hitBox, levelData)) {
 				inAir = true;
 			}
 		}
@@ -189,6 +192,9 @@ public class Player extends Entity{
 	
 	public void loadLevelData(int[][] levelData) {
 		this.levelData = levelData;
+		if (!isEntityOnFloor(hitBox, levelData)) {
+			inAir = true;
+		}
 	}
 	
 
