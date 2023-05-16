@@ -4,7 +4,14 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
-public class Menu implements StateMethods{
+import com.tbonegames.main.Game;
+
+public class Menu extends State implements StateMethods{
+
+	public Menu(Game game) {
+		super(game);
+
+	}
 
 	@Override
 	public void update() {
