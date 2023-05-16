@@ -6,6 +6,8 @@ import static utils.Constants.Directions.*;
 
 import com.tbonegames.main.GamePanel;
 
+import gamestates.Gamestate;
+
 public class KeyboardInputs implements KeyListener{
 	
 	
@@ -23,14 +25,34 @@ public class KeyboardInputs implements KeyListener{
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-
+		switch(Gamestate.state) {
+		case MENU:
+			gamePanel.getGame().getMenu().keyReleased(e);
+			break;
+		case PLAYING:
+			gamePanel.getGame().getPlaying().keyReleased(e);
+			break;
+		default:
+			break;
+		
+		}
 		
 	}
 	
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-
+			switch(Gamestate.state) {
+			case MENU:
+				gamePanel.getGame().getMenu().keyPressed(e);
+				break;
+			case PLAYING:
+				gamePanel.getGame().getPlaying().keyPressed(e);
+				break;
+			default:
+				break;
+			
+			}
 		}
 		
 

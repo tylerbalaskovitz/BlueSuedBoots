@@ -38,7 +38,8 @@ public class Game implements Runnable{
 	}
 	
 	private void initClasses() {
-		
+		menu = new Menu(this);
+		playing = new Playing(this);
 	}
 	
 	private void startGameLoop() {
@@ -50,10 +51,10 @@ public class Game implements Runnable{
 
 		switch(Gamestate.state) {
 		case MENU:
-			
+			menu.update();
 			break;
 		case PLAYING:
-			
+			playing.update();
 			break;
 		default:
 			break;
@@ -66,11 +67,10 @@ public class Game implements Runnable{
 		
 		switch(Gamestate.state) {
 		case MENU:
-			menu.update();
+			menu.draw(g);
 			break;
 		case PLAYING:
-			levelManager.draw(g);
-			player.render(g);
+			playing.draw(g);
 			break;
 		default:
 			break;
@@ -140,7 +140,17 @@ public class Game implements Runnable{
 	
 
 	public void windowFocusLost() {
-		
+		if(Gamestate.state == Gamestate.PLAYING) {
+			playing.getPlayer().resetDirBooleans();
+		}
+	}
+	
+	public Menu getMenu() {
+		return menu;
+	}
+	
+	public Playing getPlaying() {
+		return playing;
 	}
 	
 	

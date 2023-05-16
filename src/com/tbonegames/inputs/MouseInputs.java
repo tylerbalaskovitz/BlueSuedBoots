@@ -7,6 +7,8 @@ import java.awt.event.MouseMotionListener;
 
 import com.tbonegames.main.GamePanel;
 
+import gamestates.Gamestate;
+
 public class MouseInputs implements MouseListener, MouseMotionListener{
 	private GamePanel gamePanel;
 	public MouseInputs(GamePanel gamePanel) {
@@ -25,7 +27,17 @@ public class MouseInputs implements MouseListener, MouseMotionListener{
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-
+		switch(Gamestate.state) {
+		case MENU:
+			gamePanel.getGame().getMenu().mouseClicked(e);
+			break;
+		case PLAYING:
+			gamePanel.getGame().getPlaying().mouseClicked(e);
+			break;
+		default:
+			break;
+		
+		}
 	}
 
 	@Override
