@@ -36,19 +36,24 @@ public class Playing extends State implements StateMethods{
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
+		levelManager.update();
+		player.update();
 		
 	}
 
 	@Override
 	public void draw(Graphics g) {
-		// TODO Auto-generated method stub
+		levelManager.draw(g);
+		player.render(g);
 		
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
+		if (e.getButton() == MouseEvent.BUTTON1) {
+			player.setAttacking(true);
+		}
+		
 		
 	}
 
@@ -72,14 +77,29 @@ public class Playing extends State implements StateMethods{
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
+		switch(e.getKeyCode()) {
+		case KeyEvent.VK_W:	player.setUp(true);break;
+		case KeyEvent.VK_A:	player.setLeft(true);break;
+		case KeyEvent.VK_S:	player.setDown(true);break;
+		case KeyEvent.VK_D:	player.setRight(true);break;
+		case KeyEvent.VK_SPACE: player.setJump(true);break;
+	
+		}
 		
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
+		switch(e.getKeyCode()) {
+		case KeyEvent.VK_W:	player.setUp(false);break;
+		case KeyEvent.VK_A:	player.setLeft(false);break;
+		case KeyEvent.VK_S:	player.setDown(false);break;
+		case KeyEvent.VK_D:	player.setRight(false);break;
+		case KeyEvent.VK_SPACE: player.setJump(false);break;
+			
+		
+		}
 		
 	}
-	
+
 }
