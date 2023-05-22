@@ -7,23 +7,39 @@ import java.awt.event.MouseEvent;
 
 import com.tbonegames.main.Game;
 
+import ui.MenuButton;
+
 public class Menu extends State implements StateMethods{
+	
+	private MenuButton[] buttons = new MenuButton[3];
 
 	public Menu(Game game) {
 		super(game);
-
+		loadButtons();
+		
+		
+	}
+	
+	private void loadButtons() {
+		buttons[0] = new MenuButton(Game.GAME_WIDTH/2, (int)(150 * Game.SCALE), 0, Gamestate.PLAYING);
+		buttons[1] = new MenuButton(Game.GAME_WIDTH/2, (int)(220 * Game.SCALE), 1, Gamestate.OPTIONS);
+		buttons[2] = new MenuButton(Game.GAME_WIDTH/2, (int)(290 * Game.SCALE), 2, Gamestate.QUIT);
 	}
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
+		for(MenuButton mb : buttons) {
+			mb.update();
+		}
 		
 	}
 
 	@Override
 	public void draw(Graphics g) {
-		g.setColor(Color.black);
-		g.drawString("Menu", Game.GAME_WIDTH/2 , 200);
+		for(MenuButton mb : buttons) {
+			mb.draw(g);
+		}
+		
 	}
 
 	@Override
@@ -33,19 +49,46 @@ public class Menu extends State implements StateMethods{
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+		for(MenuButton mb : buttons) {
+			if(isIn(e, mb)) {
+				mb.setMousePressed(true);
+				break;
+			}
+		}		
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
+		for(MenuButton mb : buttons) {
+			if(isIn(e, mb)) {
+				if(mb.isMousePressed()) {
+					mb.applyGameState();
+					break;
+				}
+			}
+		}
+		resetButtons();
 		
+	}
+
+	private void resetButtons() {
+		for (MenuButton mb: buttons) {
+			mb.resetBools();
+		}
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
+		for (MenuButton mb: buttons) {
+			mb.setMouseOver(false);
+		}
+		
+		for (MenuButton mb: buttons) {
+			if (isIn(e, mb)) {
+				mb.setMouseOver(true);
+				break;
+			}
+		}
 		
 	}
 

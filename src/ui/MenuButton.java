@@ -82,6 +82,16 @@ public class MenuButton {
 		mouseOver = false;
 		mousePressed = false;
 	}
+
+	public Rectangle getBounds() {
+		return bounds;
+	}
+
+	public void setBounds(Rectangle bounds) {
+		this.bounds = bounds;
+	}
+	
+	
 	
 	
 	
