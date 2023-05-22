@@ -18,7 +18,7 @@ public class Player extends Entity{
 	private int playerAction = IDLE;
 	private boolean moving = false, attacking = false;
 	private boolean left, up, right, down, jump;
-	private float playerSpeed = 2.0f;
+	private float playerSpeed = 2.0f; //Can be related to the scale of the game. Originally, 2.0f
 	private int[][] levelData;
 	private float xDrawOffset = 21 * Game.SCALE;
 	private float yDrawOffset = 4 * Game.SCALE;
@@ -33,7 +33,7 @@ public class Player extends Entity{
 	public Player(float x, float y, int width, int height) {
 		super(x, y, width, height);
 		loadAnimations();
-		initHitBox(x, y, 20 * Game.SCALE, 27*Game.SCALE);
+		initHitBox(x, y, (int)(20 * Game.SCALE),(int)(27*Game.SCALE));
 		
 	}
 	
@@ -43,6 +43,7 @@ public class Player extends Entity{
 		updatePos();
 		updateAnimationTick();
 		setAnimation();
+		System.out.println("Player speed" + playerSpeed);
 		
 	}
 	
