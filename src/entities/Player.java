@@ -43,7 +43,6 @@ public class Player extends Entity{
 		updatePos();
 		updateAnimationTick();
 		setAnimation();
-		System.out.println("Player speed" + playerSpeed);
 		
 	}
 	

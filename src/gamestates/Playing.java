@@ -10,14 +10,16 @@ import entities.Player;
 import levels.LevelManager;
 
 public class Playing extends State implements StateMethods{
+
+	private Player player;
+	private LevelManager levelManager;
+	private boolean paused; 
+	
 	public Playing(Game game) {
 		super(game);
 		initClasses();
 	}
 
-	private Player player;
-	private LevelManager levelManager;
-	
 	private void initClasses() {
 
 		levelManager = new LevelManager(game);
