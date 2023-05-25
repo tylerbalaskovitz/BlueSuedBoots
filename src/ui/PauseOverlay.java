@@ -3,7 +3,7 @@ package ui;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-
+import static utils.Constants.UI.PauseButtons.*;
 import com.tbonegames.main.Game;
 
 import utils.LoadSave;
@@ -12,11 +12,22 @@ public class PauseOverlay {
 
 	private BufferedImage backgroundImage;
 	private int backgroundX, backgroundY, backgroundWidth, backgroundHeight;
+	private SoundButton musicButton, sfxButton;
 	
 	
 	public PauseOverlay() {
 	loadBackground();
+	createSoundButtons();
 		
+	}
+	
+	private void createSoundButtons() {
+		
+		int soundX = (int)(450 * Game.SCALE);
+		int musicY = (int)(140 * Game.SCALE);
+		int sfxY = (int) (186 * Game.SCALE);
+		musicButton = new SoundButton(soundX, musicY, SOUND_SIZE, SOUND_SIZE);
+		sfxButton = new SoundButton(soundX, sfxY, SOUND_SIZE, SOUND_SIZE);
 	}
 	
 	private void loadBackground() {
@@ -33,7 +44,12 @@ public class PauseOverlay {
 	}
 	
 	public void draw(Graphics g) {
+		//Background
 		g.drawImage(backgroundImage,backgroundX, backgroundY, backgroundWidth, backgroundHeight, null);
+		
+		//Sound buttons
+		musicButton.draw(g);
+		sfxButton.draw(g);
 	}
 	
 	public void mouseDragged(MouseEvent e) {
