@@ -43,7 +43,7 @@ public class SoundButton extends PauseButton{
 		
 		colIndex = 0;
 		if (mouseOver)
-			colIndex = 0;
+			colIndex = 1;
 		
 		if(mousePressed)
 			colIndex =2;

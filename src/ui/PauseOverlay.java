@@ -94,7 +94,7 @@ public class PauseOverlay {
 		if (isIn(e, musicButton))
 			musicButton.setMouseOver(true);
 		else if(isIn(e, sfxButton))
-				sfxButton.setMouseOver(true);
+			sfxButton.setMouseOver(true);
 		else if(isIn(e, menuB))
 			menuB.setMouseOver(true);
 		else if(isIn(e, replayB))
