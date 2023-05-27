@@ -126,8 +126,10 @@ public class PauseOverlay {
 			if (sfxButton.isMousePressed())
 				sfxButton.setMuted(!sfxButton.isMuted());
 		}else if (isIn(e, menuB)) {
-			if (menuB.isMousePressed())
+			if (menuB.isMousePressed()) {
 				Gamestate.state = Gamestate.MENU;
+				playing.unpauseGame();
+			}
 		}else if (isIn(e, replayB)) {
 			if (replayB.isMousePressed())
 				System.out.println("Replay level! More to come");
