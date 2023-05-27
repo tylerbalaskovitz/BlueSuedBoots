@@ -27,7 +27,7 @@ public class Playing extends State implements StateMethods{
 		levelManager = new LevelManager(game);
 		player = new Player(200, 200, (int)(64* Game.SCALE), (int)(40*Game.SCALE));
 		player.loadLevelData(levelManager.getCurrentLevel().getLevelData());
-		pauseOverlay = new PauseOverlay();
+		pauseOverlay = new PauseOverlay(this);
 	}
 	
 	public Player getPlayer() {
@@ -111,6 +111,10 @@ public class Playing extends State implements StateMethods{
 		
 		}
 		
+	}
+	
+	public void unpauseGame() {
+		paused = false;
 	}
 
 }

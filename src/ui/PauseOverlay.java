@@ -7,17 +7,21 @@ import static utils.Constants.UI.PauseButtons.*;
 import static utils.Constants.UI.URMButtons.*;
 import com.tbonegames.main.Game;
 
+import gamestates.Gamestate;
+import gamestates.Playing;
 import utils.LoadSave;
 
 public class PauseOverlay {
 
+	private Playing playing;
 	private BufferedImage backgroundImage;
 	private int backgroundX, backgroundY, backgroundWidth, backgroundHeight;
 	private SoundButton musicButton, sfxButton;
 	private UrmButton menuB, replayB, unpauseB;
 	
 	
-	public PauseOverlay() {
+	public PauseOverlay(Playing playing) {
+	this.playing = playing;
 	loadBackground();
 	createSoundButtons();
 	createUrmButtons();
@@ -83,11 +87,20 @@ public class PauseOverlay {
 	public void mouseMoved(MouseEvent e) {
 		musicButton.setMouseOver(false);
 		sfxButton.setMouseOver(false);
+		menuB.setMouseOver(false);
+		replayB.setMouseOver(false);
+		unpauseB.setMouseOver(false);
 		
 		if (isIn(e, musicButton))
 			musicButton.setMouseOver(true);
 		else if(isIn(e, sfxButton))
 				sfxButton.setMouseOver(true);
+		else if(isIn(e, menuB))
+			menuB.setMouseOver(true);
+		else if(isIn(e, replayB))
+			replayB.setMouseOver(true);
+		else if(isIn(e, unpauseB))
+			unpauseB.setMouseOver(true);
 		
 	}
 	
@@ -95,7 +108,13 @@ public class PauseOverlay {
 		if (isIn(e, musicButton))
 			musicButton.setMousePressed(true);
 		else if(isIn(e, sfxButton))
-				sfxButton.setMousePressed(true);
+			sfxButton.setMousePressed(true);
+		else if(isIn(e, menuB))
+			menuB.setMousePressed(true);
+		else if(isIn(e, replayB))
+			replayB.setMousePressed(true);
+		else if(isIn(e, unpauseB))
+			unpauseB.setMousePressed(true);
 	}
 	
 	public void mouseReleased(MouseEvent e) {
@@ -103,12 +122,25 @@ public class PauseOverlay {
 			if (musicButton.isMousePressed()) 
 				musicButton.setMuted(!musicButton.isMuted());
 			
-		} else if (isIn(e, sfxButton))
+		} else if (isIn(e, sfxButton)) {
 			if (sfxButton.isMousePressed())
 				sfxButton.setMuted(!sfxButton.isMuted());
+		}else if (isIn(e, menuB)) {
+			if (menuB.isMousePressed())
+				Gamestate.state = Gamestate.MENU;
+		}else if (isIn(e, replayB)) {
+			if (replayB.isMousePressed())
+				System.out.println("Replay level! More to come");
+		}else if (isIn(e, unpauseB)) {
+			if (unpauseB.isMousePressed())
+				playing.unpauseGame();
+		}
 		
 		musicButton.resetBools();
 		sfxButton.resetBools();
+		menuB.resetBools();
+		replayB.resetBools();
+		unpauseB.resetBools();
 	}
 	
 	private boolean isIn(MouseEvent e, PauseButton b) {
