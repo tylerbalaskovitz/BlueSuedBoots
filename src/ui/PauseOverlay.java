@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import static utils.Constants.UI.PauseButtons.*;
+import static utils.Constants.UI.URMButtons.*;
 import com.tbonegames.main.Game;
 
 import utils.LoadSave;
@@ -19,9 +20,22 @@ public class PauseOverlay {
 	public PauseOverlay() {
 	loadBackground();
 	createSoundButtons();
+	createUrmButtons();
 		
 	}
 	
+	private void createUrmButtons() {
+		int menuX = (int)(313 * Game.SCALE);
+		int replayX  = (int)(387 * Game.SCALE);
+		int unpauseX = (int)(462 * Game.SCALE);
+		int bY = (int)(325 * Game.SCALE);
+		
+		menuB = new UrmButton(menuX, bY, URM_SIZE, URM_SIZE, 2);
+		replayB = new UrmButton(replayX, bY, URM_SIZE, URM_SIZE, 1);
+		unpauseB = new UrmButton(unpauseX, bY, URM_SIZE, URM_SIZE, 0);
+		
+	}
+
 	private void createSoundButtons() {
 		
 		int soundX = (int)(450 * Game.SCALE);
@@ -43,6 +57,9 @@ public class PauseOverlay {
 	public void update() {
 		musicButton.update();
 		sfxButton.update();
+		menuB.update();
+		replayB.update();
+		unpauseB.update();
 	}
 	
 	public void draw(Graphics g) {
@@ -52,6 +69,11 @@ public class PauseOverlay {
 		//Sound buttons
 		musicButton.draw(g);
 		sfxButton.draw(g);
+		
+		//Urm Buttons
+		menuB.draw(g);
+		replayB.draw(g);
+		unpauseB.draw(g);
 	}
 	
 	public void mouseDragged(MouseEvent e) {

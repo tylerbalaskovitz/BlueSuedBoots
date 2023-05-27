@@ -30,7 +30,7 @@ public class UrmButton extends PauseButton{
 		if (mouseOver)
 			index = 0;
 		if (mousePressed)
-			index = 2;
+			index = 1;
 	}
 	
 	public void draw(Graphics g) {
