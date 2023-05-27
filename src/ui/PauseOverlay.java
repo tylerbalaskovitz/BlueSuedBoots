@@ -13,6 +13,7 @@ public class PauseOverlay {
 	private BufferedImage backgroundImage;
 	private int backgroundX, backgroundY, backgroundWidth, backgroundHeight;
 	private SoundButton musicButton, sfxButton;
+	private UrmButton menuB, replayB, unpauseB;
 	
 	
 	public PauseOverlay() {
