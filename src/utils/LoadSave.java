@@ -19,6 +19,7 @@ public class LoadSave {
 	public static final String PAUSE_BACKGROUND = "pause_menu.png";
 	public static final String SOUND_BUTTONS = "sound_button.png";
 	public static final String URM_BUTTONS = "urm_buttons.png";
+	public static final String VOLUME_BUTTONS = "volume_buttons.png";
 	
 	//only static methods will be used so there is no need for a constructor
 		
