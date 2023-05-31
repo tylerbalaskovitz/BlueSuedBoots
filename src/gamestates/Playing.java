@@ -65,14 +65,22 @@ public class Playing extends State implements StateMethods{
 		
 		if (diff > rightBorder) {
 			xLevelOffset += diff - rightBorder;
+		} else if (diff < leftBorder){
+			xLevelOffset += diff - leftBorder;
+		}
+		
+		if(xLevelOffset > maxLevelOffsetX) {
+			xLevelOffset = maxLevelOffsetX;
+		} else if (xLevelOffset < 0) {
+			xLevelOffset = 0;
 		}
 		
 	}
 
 	@Override
 	public void draw(Graphics g) {
-		levelManager.draw(g);
-		player.render(g);
+		levelManager.draw(g, xLevelOffset);
+		player.render(g, xLevelOffset);
 		if (paused)
 			pauseOverlay.draw(g);
 		

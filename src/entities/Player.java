@@ -46,12 +46,12 @@ public class Player extends Entity{
 		
 	}
 	
-	public void render(Graphics g) {
+	public void render(Graphics g, int levelOffset) {
 
 		//with buffered images you can draw a section of the image, ie tiles for the game to work.
 		//also the method with its parameters filled out can also be used to pass an image
 		//128 is the width and the heeight is 80
-		g.drawImage(animations[playerAction][animationIndex], (int)(hitBox.x - xDrawOffset), (int)(hitBox.y - yDrawOffset), width, height, null);
+		g.drawImage(animations[playerAction][animationIndex], (int)(hitBox.x - xDrawOffset) - levelOffset, (int)(hitBox.y - yDrawOffset), width, height, null);
 		drawHitBox(g);
 	}
 	
