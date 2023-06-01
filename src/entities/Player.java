@@ -106,9 +106,13 @@ public class Player extends Entity{
 		if(jump) {
 			jump();
 		}
-		if (!left && !right && !inAir) {
-			return; //ends the method earlier.
-		}
+//		if (!left && !right && !inAir) {
+//			return; //ends the method earlier.
+//		}
+	
+		if(!inAir)
+			if((!left && !right) || (right && left) )
+				return;
 		
 		float xSpeed = 0; //temporary storage of the spped.
 		
