@@ -29,7 +29,7 @@ public class Playing extends State implements StateMethods{
 	private int maxTilesOffset = levelTilesWide - Game.TILES_IN_WIDTH;
 	private int maxLevelOffsetX = maxTilesOffset * Game.TILES_SIZE;
 	
-	private BufferedImage backgroundImage, bigCloud;
+	private BufferedImage backgroundImage, bigCloud, smallCloud;
 	
 	public Playing(Game game) {
 		super(game);
