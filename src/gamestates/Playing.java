@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 
 import com.tbonegames.main.Game;
 
@@ -27,9 +28,12 @@ public class Playing extends State implements StateMethods{
 	private int maxTilesOffset = levelTilesWide * Game.TILES_IN_WIDTH;
 	private int maxLevelOffsetX = maxTilesOffset * Game.TILES_SIZE;
 	
+	private BufferedImage backgroundImage, bigCloud;
+	
 	public Playing(Game game) {
 		super(game);
 		initClasses();
+		backgroundImage = LoadSave.getSpriteAtlas(LoadSave.PLAYING_BACKGROUND_IMAGE);
 	}
 
 	private void initClasses() {
@@ -80,6 +84,8 @@ public class Playing extends State implements StateMethods{
 
 	@Override
 	public void draw(Graphics g) {
+		g.drawImage(backgroundImage, 0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT, null);
+		
 		levelManager.draw(g, xLevelOffset);
 		player.render(g, xLevelOffset);
 		if (paused) {
