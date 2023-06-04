@@ -25,6 +25,7 @@ public class LoadSave {
 	public static final String PLAYING_BACKGROUND_IMAGE = "playing_bg_img.png";
 	public static final String BIG_CLOUDS = "big_clouds.png";
 	public static final String SMALL_CLOUDS = "small_clouds.png";
+	public static final String CRABBY_SPRITE = "crabby_sprite.png";
 	
 	//only static methods will be used so there is no need for a constructor
 		
