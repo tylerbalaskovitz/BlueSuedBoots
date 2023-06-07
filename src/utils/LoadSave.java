@@ -4,10 +4,14 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import static utils.Constants.EnemyConstants.CRABBY;
 
 import javax.imageio.ImageIO;
 
 import com.tbonegames.main.Game;
+
+import entities.Crabby;
 
 public class LoadSave {
 
@@ -46,6 +50,23 @@ public class LoadSave {
 			}
 		}
 		return img;
+	}
+	
+	public static ArrayList<Crabby> getCrabs(){
+		BufferedImage image = getSpriteAtlas(LEVEL_ONE_DATA);
+		ArrayList<Crabby> list = new ArrayList<>();
+		for (int j = 0; j < image.getHeight(); j++) {
+			for (int i = 0; i < image.getWidth(); i++) {
+				Color color = new Color(image.getRGB(i, j));
+				int value = color.getGreen();
+				if (value == CRABBY) {
+					list.add(new Crabby(i * Game.TILES_SIZE, j * Game.TILES_SIZE));
+				}
+				levelData[j][i] = value;
+			}
+		}
+		
+		
 	}
 	
 	public static int[][] getLevelData(){

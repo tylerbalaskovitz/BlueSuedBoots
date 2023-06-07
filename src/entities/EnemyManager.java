@@ -1,27 +1,47 @@
 package entities;
 
+import static utils.Constants.EnemyConstants.*;
+
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import gamestates.Playing;
 import utils.LoadSave;
-import static utils.Constants.EnemyConstants.*;
 
 public class EnemyManager {
 
 	private Playing playing;
 	private BufferedImage[][] crabbyArray;
+	private ArrayList<Crabby> crabbies = new ArrayList<>();
 	
 	public EnemyManager(Playing playing) {
 		this.playing = playing;
 		loadEnemyImages();
+		addEnemies();
+		
 	}
 	
+	private void addEnemies() {
+		crabbies = LoadSave.getCrabs();
+		
+		
+	}
+
 	public void update() {
+		for (Crabby c: crabbies)
+			c.update();
 		
 	}
 	
 	public void draw (Graphics g) {
+		drawCrabs(g);
+		
+	}
+
+	private void drawCrabs(Graphics g) {
+		for (Crabby c: crabbies)
+			g.drawImage(crabbyArray[c.getEnemyState()][c.getAnimationIndex()], (int)c.getHitBox().x, (int)c.getHitBox().y, CRABBY_WIDTH, CRABBY_HEIGHT, null);
 		
 	}
 
