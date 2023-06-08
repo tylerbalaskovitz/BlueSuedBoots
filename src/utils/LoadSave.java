@@ -62,9 +62,9 @@ public class LoadSave {
 				if (value == CRABBY) {
 					list.add(new Crabby(i * Game.TILES_SIZE, j * Game.TILES_SIZE));
 				}
-				levelData[j][i] = value;
 			}
 		}
+		return list;
 		
 		
 	}
