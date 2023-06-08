@@ -23,8 +23,13 @@ public abstract class Enemy extends Entity{
 		}
 	}
 	
-	public void update() {
+	public void update(int[][] levelData) {
+		updateMove(levelData);
 		updateAnimationTick();
+	}
+	
+	private void updateMove(int[][] levelData) {
+		
 	}
 	
 	public int getAnimationIndex() {
