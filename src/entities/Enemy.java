@@ -47,10 +47,12 @@ public abstract class Enemy extends Entity{
 			if (canMoveHere(hitBox.x, hitBox.y, hitBox.width, hitBox.height, levelData)) {
 				hitBox.y += fallSpeed;
 				fallSpeed += gravity;
-			}
+			}else {
+				inAir = false;
+				hitBox.y = getEntityYPosUnderRoofOrAboveFloor(hitBox, fallSpeed);
+			}  
+			
 		} else {
-			inAir = false;
-			hitBox.y = getEntityYPosUnderRoofOrAboveFloor(hitBox, fallSpeed);
 			
 		}
 		
