@@ -9,14 +9,14 @@ public abstract class Enemy extends Entity{
 
 	
 	
-	private int animationIndex, enemyState, enemyType;
-	private int animationTick, animationSpeed = 25;
-	private boolean firstUpdate = true;
-	private boolean inAir = false;
-	private float fallSpeed;
-	private float gravity = 0.04f * Game.SCALE;
-	private float walkSpeed = 0.5f * Game.SCALE;
-	private int walkDir = LEFT;
+	protected int animationIndex, enemyState, enemyType;
+	protected int animationTick, animationSpeed = 25;
+	protected boolean firstUpdate = true;
+	protected boolean inAir = false;
+	protected float fallSpeed;
+	protected float gravity = 0.04f * Game.SCALE;
+	protected float walkSpeed = 0.5f * Game.SCALE;
+	protected int walkDir = LEFT;
 	
 	public Enemy(float x, float y, int width, int height, int enemyType) {
 		super(x, y, width, height);
@@ -24,7 +24,7 @@ public abstract class Enemy extends Entity{
 		initHitBox(x, y, width, height);
 	}
 	
-	private void updateAnimationTick() {
+	protected void updateAnimationTick() {
 		animationTick++;
 		if (animationTick > animationSpeed) {
 			animationTick = 0;
@@ -35,53 +35,44 @@ public abstract class Enemy extends Entity{
 		}
 	}
 	
-	public void update(int[][] levelData) {
-		updateMove(levelData);
-		updateAnimationTick();
+	protected void updateInAir(int [][]levelData) {
+		if (canMoveHere(hitBox.x, hitBox.y, hitBox.width, hitBox.height, levelData)) {
+			hitBox.y += fallSpeed;
+			fallSpeed += gravity;
+		}else {
+			inAir = false;
+			hitBox.y = getEntityYPosUnderRoofOrAboveFloor(hitBox, fallSpeed);
+		}  
 	}
 	
-	private void updateMove(int[][] levelData) {
+	protected void move(int[][] levelData) {
+		float xSpeed = 0;
+		if (walkDir == LEFT) {
+			xSpeed = -walkSpeed;
+		} else {
+			xSpeed = walkSpeed;
+		}
+		if (canMoveHere(hitBox.x + xSpeed, hitBox.y, hitBox.width, hitBox.height, levelData)) {
+			if (isFloor(hitBox, xSpeed, levelData)) {
+				hitBox.x += xSpeed;
+				return;
+			}
+		}
+		
+		changeWalkDir();
+	}
+	
+	protected void firstUpdateCheck(int[][] levelData) {
 		if (firstUpdate) {
 			if(!isEntityOnFloor(hitBox, levelData)) {
 				inAir = true;
 			}
 			firstUpdate = false;
-		}
-		if (inAir) {
-			if (canMoveHere(hitBox.x, hitBox.y, hitBox.width, hitBox.height, levelData)) {
-				hitBox.y += fallSpeed;
-				fallSpeed += gravity;
-			}else {
-				inAir = false;
-				hitBox.y = getEntityYPosUnderRoofOrAboveFloor(hitBox, fallSpeed);
-			}  
-			
-		} else {
-			switch(enemyState) {
-			case IDLE: enemyState = RUNNING; break;
-			case RUNNING: 
-				float xSpeed = 0;
-				if (walkDir == LEFT) {
-					xSpeed = -walkSpeed;
-				} else {
-					xSpeed = walkSpeed;
-				}
-				if (canMoveHere(hitBox.x + xSpeed, hitBox.y, hitBox.width, hitBox.height, levelData)) {
-					if (isFloor(hitBox, xSpeed, levelData)) {
-						hitBox.x += xSpeed;
-						return;
-					}
-				}
-				
-				changeWalkDir();
-				
-				break;
-			}
-		}
-		
+	}
 	}
 	
-	private void changeWalkDir() {
+	
+	protected void changeWalkDir() {
 		if (walkDir ==LEFT) {
 			walkDir = RIGHT;
 		} else {
