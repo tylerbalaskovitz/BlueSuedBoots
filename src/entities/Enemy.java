@@ -17,11 +17,30 @@ public abstract class Enemy extends Entity{
 	protected float gravity = 0.04f * Game.SCALE;
 	protected float walkSpeed = 0.5f * Game.SCALE;
 	protected int walkDir = LEFT;
+	protected int tileY;
 	
 	public Enemy(float x, float y, int width, int height, int enemyType) {
 		super(x, y, width, height);
 		this.enemyType = enemyType;
 		initHitBox(x, y, width, height);
+	}
+	
+	protected boolean canSeePlayer(int[][] levelData, Player player) {
+		int playerTileY = (int)(player.getHitBox().y/Game.TILES_SIZE);
+		if (playerTileY == tileY) {
+			if(isPlayerInRange(player)) {
+				if(isSightClear(levelData, hitBox, player.hitBox, tileY)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	protected void newState(int enemyState) {
+		this.enemyState = enemyState;
+		animationTick = 0;
+		animationIndex = 0;
 	}
 	
 	protected void updateAnimationTick() {
@@ -42,6 +61,7 @@ public abstract class Enemy extends Entity{
 		}else {
 			inAir = false;
 			hitBox.y = getEntityYPosUnderRoofOrAboveFloor(hitBox, fallSpeed);
+			tileY = (int)(hitBox.y/Game.TILES_SIZE);
 		}  
 	}
 	

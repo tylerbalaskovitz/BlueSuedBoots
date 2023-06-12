@@ -1,11 +1,6 @@
 package entities;
 
-import static utils.Constants.Directions.LEFT;
 import static utils.Constants.EnemyConstants.*;
-import static utils.HelpMethods.canMoveHere;
-import static utils.HelpMethods.getEntityYPosUnderRoofOrAboveFloor;
-import static utils.HelpMethods.isEntityOnFloor;
-import static utils.HelpMethods.isFloor;
 
 import com.tbonegames.main.Game;
 
@@ -31,7 +26,7 @@ public class Crabby extends Enemy{
 			
 		} else {
 			switch(enemyState) {
-			case IDLE: enemyState = RUNNING; break;
+			case IDLE: newState(RUNNING); break;
 			case RUNNING: 
 				move(levelData);
 				break;
