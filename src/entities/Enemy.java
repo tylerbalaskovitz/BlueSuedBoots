@@ -18,6 +18,7 @@ public abstract class Enemy extends Entity{
 	protected float walkSpeed = 0.5f * Game.SCALE;
 	protected int walkDir = LEFT;
 	protected int tileY;
+	protected float attackDistance = (int)Game.TILES_SIZE;
 	
 	public Enemy(float x, float y, int width, int height, int enemyType) {
 		super(x, y, width, height);
@@ -35,6 +36,11 @@ public abstract class Enemy extends Entity{
 			}
 		}
 		return false;
+	}
+	
+	private boolean isPlayerInRange(Player player) {
+		int absValue = (int)Math.abs(player.hitBox.x - hitBox.x);
+		return absValue <= attackDistance * 5;// can return boolean mathmatical comparisons in Java as well with the return statements.
 	}
 	
 	protected void newState(int enemyState) {
