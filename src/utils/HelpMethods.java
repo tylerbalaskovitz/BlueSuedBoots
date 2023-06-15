@@ -22,13 +22,25 @@ public class HelpMethods {
 		
 	}
 	
+	public static boolean isAllTilesWalkable(int xStart, int xEnd, int y, int[][] levelData) {
+		
+	}
+	
 	private static boolean isSightClear(int[][] levelData, Rectangle2D.Float firstHitbox, Rectangle2D.Float secondHitbox, int yTile) {
 		int firstXTile = (int)(firstHitbox.x / Game.TILES_SIZE);
 		int secondXTile = (int)(secondHitbox.x / Game.TILES_SIZE);
 		
 		if (firstXTile > secondXTile) {
 			for (int i = 0; i < firstXTile - secondXTile; i++) {
-				if ()
+				if (isTileSolid(secondXTile + i, yTile, levelData)) {
+					return true;
+				}
+			}
+		} else {
+			for (int i = 0; i < secondXTile - firstXTile; i++) {
+				if (isTileSolid(firstXTile + i, yTile, levelData)) {
+					return true;
+				}
 			}
 		}
 		
