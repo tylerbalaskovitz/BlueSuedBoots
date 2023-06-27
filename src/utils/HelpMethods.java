@@ -23,10 +23,10 @@ public class HelpMethods {
 	}
 	
 	public static boolean isAllTilesWalkable(int xStart, int xEnd, int y, int[][] levelData) {
-		
+		return true;
 	}
 	
-	private static boolean isSightClear(int[][] levelData, Rectangle2D.Float firstHitbox, Rectangle2D.Float secondHitbox, int yTile) {
+	public static boolean isSightClear(int[][] levelData, Rectangle2D.Float firstHitbox, Rectangle2D.Float secondHitbox, int yTile) {
 		int firstXTile = (int)(firstHitbox.x / Game.TILES_SIZE);
 		int secondXTile = (int)(secondHitbox.x / Game.TILES_SIZE);
 		
