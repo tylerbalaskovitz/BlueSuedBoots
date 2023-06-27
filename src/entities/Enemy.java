@@ -26,6 +26,13 @@ public abstract class Enemy extends Entity{
 		initHitBox(x, y, width, height);
 	}
 	
+	protected void turnTowardsPlayer(Player player) {
+		if (player.hitBox.x > hitBox.x) {
+			walkDir = RIGHT;
+		} else 
+			walkDir = LEFT;
+	}
+	
 	protected boolean canSeePlayer(int[][] levelData, Player player) {
 		int playerTileY = (int)(player.getHitBox().y/Game.TILES_SIZE);
 		if (playerTileY == tileY) {
