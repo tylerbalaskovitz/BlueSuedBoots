@@ -45,10 +45,16 @@ public abstract class Enemy extends Entity{
 		return false;
 	}
 	
-	private boolean isPlayerInRange(Player player) {
+	protected boolean isPlayerInRange(Player player) {
 		int absValue = (int)Math.abs(player.hitBox.x - hitBox.x);
 		return absValue <= attackDistance * 5;// can return boolean mathmatical comparisons in Java as well with the return statements.
 	}
+	
+	protected boolean isPlayerCloseForAttack(Player player) {
+		int absValue = (int)Math.abs(player.hitBox.x - hitBox.x);
+		return absValue <= attackDistance;
+	}
+	
 	
 	protected void newState(int enemyState) {
 		this.enemyState = enemyState;
