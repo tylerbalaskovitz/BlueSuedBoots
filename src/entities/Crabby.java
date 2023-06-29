@@ -12,12 +12,12 @@ public class Crabby extends Enemy{
 		
 	}
 	
-	public void update(int[][] levelData) {
-		updateMove(levelData);
+	public void update(int[][] levelData, Player player) {
+		updateMove(levelData, player);
 		updateAnimationTick();
 	}
 
-	private void updateMove(int[][] levelData) {
+	private void updateMove(int[][] levelData, Player player) {
 		if (firstUpdate) {
 			firstUpdateCheck(levelData);
 		}
@@ -28,6 +28,14 @@ public class Crabby extends Enemy{
 			switch(enemyState) {
 			case IDLE: newState(RUNNING); break;
 			case RUNNING: 
+				
+				if (canSeePlayer(levelData, player)) {
+					turnTowardsPlayer(player);
+				}
+				if (isPlayerCloseForAttack(player)) {
+					newState(ATTACK);
+				}
+				
 				move(levelData);
 				break;
 			}
